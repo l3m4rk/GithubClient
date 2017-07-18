@@ -35,7 +35,7 @@ ext {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation ('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
@@ -58,5 +58,7 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
 
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.7.19'
+
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 }
