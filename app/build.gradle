@@ -9,7 +9,7 @@ android {
     buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "example.l3m4rk.edu.githubclient"
-        minSdkVersion 18
+        minSdkVersion 14
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
