@@ -23,6 +23,7 @@ class LoginPresenter(val loginInteractor: ILoginInteractor) : ILoginPresenter {
     }
 
     override fun login(login: String, password: String) {
+        loginView?.hideKeyboard()
         loginView?.showProgress()
         val d = loginInteractor.login(LoginAction(login, password))
                 .subscribeOn(Schedulers.io())

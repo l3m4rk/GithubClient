@@ -1,11 +1,13 @@
 package example.l3m4rk.edu.githubclient.presentation.login.views
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import dagger.android.AndroidInjection
 import example.l3m4rk.edu.githubclient.R
 import example.l3m4rk.edu.githubclient.presentation.login.presenter.ILoginPresenter
@@ -47,11 +49,17 @@ class LoginActivity : AppCompatActivity(), LoginView {
     }
 
     override fun showError() {
-        Snackbar.make(window.decorView, "Что-то пошло не так!", Snackbar.LENGTH_SHORT).show()
+        Toast.makeText(this, "Что-то пошло не так!", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun hideKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
     }
 
     override fun showUserScreen() {
         startActivity(Intent(this, UserActivity::class.java))
+        finish()
     }
 
     override fun onStop() {

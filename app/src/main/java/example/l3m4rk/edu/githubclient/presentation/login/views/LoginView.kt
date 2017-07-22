@@ -6,6 +6,8 @@ interface LoginView {
 
     fun hideProgress()
 
+    fun hideKeyboard()
+
     fun showError()
 
     fun showUserScreen()
