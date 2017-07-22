@@ -5,12 +5,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 25
     buildToolsVersion "26.0.0"
     defaultConfig {
         applicationId "example.l3m4rk.edu.githubclient"
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -21,10 +21,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    kapt {
+        generateStubs = true
+    }
 }
 
 ext {
-    support = '26.0.0-beta2'
+    support = '25.4.0'
     dagger = '2.11'
     retrofit = '2.3.0'
     okhttp = '3.8.1'
@@ -48,6 +51,8 @@ dependencies {
     implementation "com.google.dagger:dagger-android:$dagger"
     annotationProcessor "com.google.dagger:dagger-android-processor:$dagger"
     kapt "com.google.dagger:dagger-android-processor:$dagger"
+    implementation 'com.google.dagger:dagger-android-support:2.11'
+    kapt 'com.google.dagger:dagger-android-support:2.11'
 
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"
@@ -56,6 +61,8 @@ dependencies {
 
     implementation "io.reactivex.rxjava2:rxjava:$rxjava"
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid"
+    implementation "com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0"
+    implementation "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7-kotlin:2.0.0"
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:2.8.47'
