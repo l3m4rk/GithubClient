@@ -12,7 +12,7 @@ class UserRepository(context: Context) : IUserRepository {
         private const val KEY_LOGIN = "key_login"
         private const val KEY_PASSWORD = "key_password"
         private const val KEY_AVATAR_URL = "avatar_url"
-        private const val KEY_TOKEN = "key_password"
+        private const val KEY_TOKEN = "key_token"
     }
 
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -22,7 +22,7 @@ class UserRepository(context: Context) : IUserRepository {
             putString(KEY_LOGIN, user.login)
             putString(KEY_PASSWORD, user.password)
             putString(KEY_AVATAR_URL, user.avatarUrl)
-//            putString(KEY_TOKEN, user.authToken)
+            putString(KEY_TOKEN, user.authToken)
         }.apply()
         return Result.Success()
     }

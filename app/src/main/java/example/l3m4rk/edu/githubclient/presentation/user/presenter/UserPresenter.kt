@@ -2,6 +2,7 @@ package example.l3m4rk.edu.githubclient.presentation.user.presenter
 
 import example.l3m4rk.edu.githubclient.business.user.IUserInteractor
 import example.l3m4rk.edu.githubclient.data.app.Result
+import example.l3m4rk.edu.githubclient.data.app.user.User
 import example.l3m4rk.edu.githubclient.presentation.user.views.UserView
 
 class UserPresenter(private val userInteractor: IUserInteractor) : IUserPresenter {
@@ -16,9 +17,7 @@ class UserPresenter(private val userInteractor: IUserInteractor) : IUserPresente
         userInteractor.checkUserLoggedIn().subscribe({
             when (it) {
                 is Result.Fail -> userView?.showLoginScreen()
-                else -> {
-                    //do nothing
-                }
+                is Result.Success -> userView?.showUser(User("","","",""))
             }
         }, {
             //error

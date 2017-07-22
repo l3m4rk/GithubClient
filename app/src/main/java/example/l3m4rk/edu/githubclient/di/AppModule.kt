@@ -16,10 +16,6 @@ class AppModule {
         return UserRepository(appContext)
     }
 
-    @Provides fun provideToken(userRepository: IUserRepository): String {
-        return userRepository.loadUser().blockingGet().authToken
-    }
-
     @Provides fun provideAuthHolder(context: Context): IAuthHolder {
         return AuthHolder(context)
     }

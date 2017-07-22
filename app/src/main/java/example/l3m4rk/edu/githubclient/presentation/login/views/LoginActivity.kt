@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity(), LoginView {
 
     override fun hideKeyboard() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+        imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
     }
 
     override fun showUserScreen() {

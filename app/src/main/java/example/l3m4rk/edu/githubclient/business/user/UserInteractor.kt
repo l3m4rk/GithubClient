@@ -17,9 +17,9 @@ class UserInteractor(private val userRepository: IUserRepository,
                             user.password.isNotEmpty() &&
                             user.avatarUrl.isNotEmpty() &&
                             user.authToken.isNotEmpty()) {
-                        Single.just(Result.Success())
+                        return@flatMap Single.just(Result.Success())
                     }
-                    Single.just(Result.Fail(Exception()))
+                    return@flatMap Single.just(Result.Fail(Exception()))
                 }
     }
 }
