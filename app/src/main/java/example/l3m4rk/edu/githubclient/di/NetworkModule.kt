@@ -5,6 +5,7 @@ import dagger.Provides
 import example.l3m4rk.edu.githubclient.di.login.LoginComponent
 import example.l3m4rk.edu.githubclient.di.user.UserComponent
 import example.l3m4rk.edu.githubclient.services.GithubService
+import example.l3m4rk.edu.githubclient.services.auth.IAuthHolder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -32,7 +33,7 @@ class NetworkModule {
         return builder.build().create(GithubService::class.java)
     }
 
-    @Provides fun provideOkHttpClient(token: String): OkHttpClient? {
+    @Provides fun provideOkHttpClient(authHolder: IAuthHolder): OkHttpClient? {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return OkHttpClient.Builder()
@@ -42,7 +43,7 @@ class NetworkModule {
                 .addInterceptor { chain ->
                     val r = chain.request()
                             .newBuilder()
-                            .addHeader(AUTH_HEADER, token)
+                            .addHeader(AUTH_HEADER, authHolder.loadToken())
                             .build()
                     chain.proceed(r)
                 }

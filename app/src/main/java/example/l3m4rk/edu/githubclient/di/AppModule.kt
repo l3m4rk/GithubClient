@@ -6,6 +6,8 @@ import dagger.Module
 import dagger.Provides
 import example.l3m4rk.edu.githubclient.repositories.user.IUserRepository
 import example.l3m4rk.edu.githubclient.repositories.user.UserRepository
+import example.l3m4rk.edu.githubclient.services.auth.AuthHolder
+import example.l3m4rk.edu.githubclient.services.auth.IAuthHolder
 
 @Module
 class AppModule {
@@ -16,6 +18,10 @@ class AppModule {
 
     @Provides fun provideToken(userRepository: IUserRepository): String {
         return userRepository.loadUser().blockingGet().authToken
+    }
+
+    @Provides fun provideAuthHolder(context: Context): IAuthHolder {
+        return AuthHolder(context)
     }
 
     @Provides fun provideContext(application: Application): Context {

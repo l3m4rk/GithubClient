@@ -8,6 +8,7 @@ import example.l3m4rk.edu.githubclient.presentation.login.presenter.ILoginPresen
 import example.l3m4rk.edu.githubclient.presentation.login.presenter.LoginPresenter
 import example.l3m4rk.edu.githubclient.repositories.user.IUserRepository
 import example.l3m4rk.edu.githubclient.services.GithubService
+import example.l3m4rk.edu.githubclient.services.auth.IAuthHolder
 
 @Module
 class LoginModule {
@@ -16,8 +17,10 @@ class LoginModule {
         return LoginPresenter(loginInteractor)
     }
 
-    @Provides fun provideLoginInteractor(githubService: GithubService, userRepository: IUserRepository): ILoginInteractor {
-        return LoginInteractor(githubService, userRepository)
+    @Provides fun provideLoginInteractor(githubService: GithubService,
+                                         userRepository: IUserRepository,
+                                         authHolder: IAuthHolder): ILoginInteractor {
+        return LoginInteractor(githubService, userRepository, authHolder)
     }
 
 
