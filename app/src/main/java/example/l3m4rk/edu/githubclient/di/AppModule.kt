@@ -1,18 +1,27 @@
 package example.l3m4rk.edu.githubclient.di
 
+import android.app.Application
+import android.content.Context
 import dagger.Module
-import dagger.android.ContributesAndroidInjector
-import example.l3m4rk.edu.githubclient.di.login.LoginModule
-import example.l3m4rk.edu.githubclient.presentation.login.views.LoginActivity
-import example.l3m4rk.edu.githubclient.presentation.user.views.UserActivity
+import dagger.Provides
+import example.l3m4rk.edu.githubclient.repositories.user.IUserRepository
+import example.l3m4rk.edu.githubclient.repositories.user.UserRepository
 
 @Module
-abstract class AppModule {
+class AppModule {
 
-    @ContributesAndroidInjector(modules = arrayOf(LoginModule::class))
-    abstract fun provideLoginActivityInjector(): LoginActivity
+    @Provides fun provideUserRepository(appContext: Context): IUserRepository {
+        return UserRepository(appContext)
+    }
 
-    @ContributesAndroidInjector()
-    abstract fun provideUserActivityInjector(): UserActivity
+    @Provides fun provideToken(userRepository: IUserRepository): String {
+        return userRepository.loadUser().blockingGet().authToken
+    }
+
+    @Provides fun provideContext(application: Application): Context {
+        return application.applicationContext
+    }
+
+
 
 }
