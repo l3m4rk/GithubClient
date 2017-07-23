@@ -71,6 +71,10 @@ class ReposFragment : Fragment(), ReposView {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun showEmptyState() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun showRepos(repos: List<RepoItem>) {
         reposAdapter.update(repos)
     }

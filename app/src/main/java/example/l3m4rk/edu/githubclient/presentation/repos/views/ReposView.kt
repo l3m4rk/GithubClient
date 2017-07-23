@@ -7,5 +7,7 @@ interface ReposView {
     fun showProgress()
     fun hideProgress()
     fun showRepos(repos: List<RepoItem>)
+    fun showEmptyState()
+    fun showError()
 
 }
