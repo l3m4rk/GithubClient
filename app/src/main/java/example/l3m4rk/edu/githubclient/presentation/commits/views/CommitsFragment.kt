@@ -11,14 +11,15 @@ import android.view.View
 import android.view.ViewGroup
 
 import example.l3m4rk.edu.githubclient.R
+import example.l3m4rk.edu.githubclient.presentation.commits.models.CommitItem
 import example.l3m4rk.edu.githubclient.presentation.commits.views.dummy.DummyContent
 import example.l3m4rk.edu.githubclient.presentation.commits.views.dummy.DummyContent.DummyItem
 
-class CommitsFragment : Fragment() {
+class CommitsFragment : Fragment(), CommitsView {
     // TODO: Customize parameters
     private var mColumnCount = 1
-    private var mListener: OnCommitInteractionListener? = null
 
+    private var mListener: OnCommitInteractionListener? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -47,7 +48,6 @@ class CommitsFragment : Fragment() {
         return view
     }
 
-
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         if (context is OnCommitInteractionListener) {
@@ -55,6 +55,26 @@ class CommitsFragment : Fragment() {
         } else {
             throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
         }
+    }
+
+    override fun showProgress() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun hideProgress() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showCommits(commits: List<CommitItem>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showEmptyState() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showError() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onDetach() {
