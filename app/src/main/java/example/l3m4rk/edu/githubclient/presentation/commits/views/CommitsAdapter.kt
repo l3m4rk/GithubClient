@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import example.l3m4rk.edu.githubclient.R
+import example.l3m4rk.edu.githubclient.presentation.commits.models.CommitItem
 
 import example.l3m4rk.edu.githubclient.presentation.commits.views.CommitsFragment.OnCommitInteractionListener
 import example.l3m4rk.edu.githubclient.presentation.commits.views.dummy.DummyContent.DummyItem
@@ -32,18 +33,22 @@ class CommitsAdapter(private val mValues: List<DummyItem>, private val mListener
         return mValues.size
     }
 
+    fun update(commits: List<CommitItem>) {
+
+    }
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mIdView: TextView
         val mContentView: TextView
+
         var mItem: DummyItem? = null
 
         init {
             mIdView = mView.findViewById(R.id.id) as TextView
             mContentView = mView.findViewById(R.id.content) as TextView
         }
-
         override fun toString(): String {
             return super.toString() + " '" + mContentView.text + "'"
         }
+
     }
 }

@@ -3,23 +3,28 @@ package example.l3m4rk.edu.githubclient.presentation.commits.views
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import example.l3m4rk.edu.githubclient.R
 import example.l3m4rk.edu.githubclient.presentation.commits.models.CommitItem
 import example.l3m4rk.edu.githubclient.presentation.commits.views.dummy.DummyContent
 import example.l3m4rk.edu.githubclient.presentation.commits.views.dummy.DummyContent.DummyItem
+import kotlinx.android.synthetic.main.empty.*
+import kotlinx.android.synthetic.main.error.*
+import kotlinx.android.synthetic.main.progress.*
 
 class CommitsFragment : Fragment(), CommitsView {
     // TODO: Customize parameters
     private var mColumnCount = 1
 
     private var mListener: OnCommitInteractionListener? = null
+    private lateinit var commitsAdapter: CommitsAdapter
+    private lateinit var commitsList: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -34,18 +39,18 @@ class CommitsFragment : Fragment(), CommitsView {
 
         activity.title = getString(R.string.title_commits)
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            val context = view.getContext()
-            val recyclerView = view
-            if (mColumnCount <= 1) {
-                recyclerView.layoutManager = LinearLayoutManager(context)
-            } else {
-                recyclerView.layoutManager = GridLayoutManager(context, mColumnCount)
-            }
-            recyclerView.adapter = CommitsAdapter(DummyContent.ITEMS, mListener)
-        }
+        commitsAdapter = CommitsAdapter(DummyContent.ITEMS, mListener)
+        setupCommitsList(view)
+
         return view
+    }
+
+    private fun setupCommitsList(view: View) {
+        val context = view.context
+        commitsList = view.findViewById(R.id.commitsList) as RecyclerView
+        commitsList.layoutManager = LinearLayoutManager(context)
+        commitsList.itemAnimator = DefaultItemAnimator()
+        commitsList.adapter = commitsAdapter
     }
 
     override fun onAttach(context: Context?) {
@@ -58,28 +63,30 @@ class CommitsFragment : Fragment(), CommitsView {
     }
 
     override fun showProgress() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        emptyView.visibility = View.GONE
+        errorView.visibility = View.GONE
+        progressView.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun showCommits(commits: List<CommitItem>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressView.visibility = View.GONE
     }
 
     override fun showEmptyState() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        emptyView.visibility = View.VISIBLE
     }
 
     override fun showError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        errorView.visibility = View.VISIBLE
     }
 
     override fun onDetach() {
         super.onDetach()
         mListener = null
+    }
+
+    override fun showCommits(commits: List<CommitItem>) {
+        commitsAdapter.update(commits)
     }
 
     interface OnCommitInteractionListener {
