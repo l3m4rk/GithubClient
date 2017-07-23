@@ -16,14 +16,21 @@ class ReposPresenter(private val githubService: GithubService) : IReposPresenter
     }
 
     override fun loadRepos() {
+        reposView?.showProgress()
         githubService.getRepos()
                 .map { repoDtoList: List<RepoDTO> -> map(repoDtoList) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     repos: List<RepoItem> ->
-                    reposView?.showRepos(repos)
+                    reposView?.hideProgress()
+                    if (repos.isEmpty()) {
+                        reposView?.showEmptyState()
+                    } else {
+                        reposView?.showRepos(repos)
+                    }
                 }, {
+                    reposView?.hideProgress()
                     reposView?.showError()
                 })
     }

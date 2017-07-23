@@ -13,6 +13,8 @@ import dagger.android.support.AndroidSupportInjection
 import example.l3m4rk.edu.githubclient.R
 import example.l3m4rk.edu.githubclient.presentation.repos.models.RepoItem
 import example.l3m4rk.edu.githubclient.presentation.repos.presenter.IReposPresenter
+import kotlinx.android.synthetic.main.empty.*
+import kotlinx.android.synthetic.main.progress.*
 import javax.inject.Inject
 
 class ReposFragment : Fragment(), ReposView {
@@ -31,16 +33,16 @@ class ReposFragment : Fragment(), ReposView {
         val view = inflater!!.inflate(R.layout.fragment_repos, container, false)
 
         reposAdapter = ReposAdapter(mListener)
-
-        // Set the adapter
-        if (view is RecyclerView) {
-            val context = view.getContext()
-            val recyclerView = view
-            recyclerView.layoutManager = LinearLayoutManager(context)
-            recyclerView.itemAnimator = DefaultItemAnimator()
-            recyclerView.adapter = reposAdapter
-        }
+        setupRepoList(view)
         return view
+    }
+
+    private fun setupRepoList(view: View) {
+        val context = view.context
+        val repoList = view.findViewById(R.id.reposList) as RecyclerView
+        repoList.layoutManager = LinearLayoutManager(context)
+        repoList.itemAnimator = DefaultItemAnimator()
+        repoList.adapter = reposAdapter
     }
 
     override fun onAttach(context: Context?) {
@@ -60,11 +62,12 @@ class ReposFragment : Fragment(), ReposView {
     }
 
     override fun showProgress() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        emptyView.visibility = View.GONE
+        progressView.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        progressView.visibility = View.GONE
     }
 
     override fun showError() {
@@ -72,7 +75,7 @@ class ReposFragment : Fragment(), ReposView {
     }
 
     override fun showEmptyState() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        emptyView.visibility = View.VISIBLE
     }
 
     override fun showRepos(repos: List<RepoItem>) {

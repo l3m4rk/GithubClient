@@ -4,4 +4,5 @@
     <string name="password_hint">Пароль</string>
     <string name="login">Войти</string>
     <string name="title_activity_login">Логин</string>
+    <string name="repos_empty">У вас нет репозиториев</string>
 </resources>

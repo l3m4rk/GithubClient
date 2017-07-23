@@ -4,4 +4,5 @@
     <string name="login_hint">Login</string>
     <string name="password_hint">Password</string>
     <string name="login">Login</string>
+    <string name="repos_empty">You have no repos</string>
 </resources>
