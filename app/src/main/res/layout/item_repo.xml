@@ -55,6 +55,8 @@
                 android:layout_below="@+id/author"
                 android:layout_toLeftOf="@+id/avatar"
                 android:layout_toStartOf="@+id/avatar"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:textAppearance="?attr/textAppearanceListItem"
                 tools:text="Repo name"
                 />
@@ -65,8 +67,12 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/name"
                 android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@+id/avatar"
+                android:layout_toStartOf="@+id/avatar"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:textAppearance="?attr/textAppearanceListItemSecondary"
-                tools:text="Repo description"
+                tools:text="Repo description jfaskdjfa; j sakdjf;kdsjf aksjd;fksdjafkasdjfaskfajd;fkajfaksdjfa;sdfk"
                 />
         </RelativeLayout>
 
@@ -93,9 +99,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
-                android:gravity="center"
                 android:drawableLeft="@drawable/ic_watches"
                 android:drawableStart="@drawable/ic_watches"
+                android:gravity="center"
                 tools:text="9"
                 />
 
