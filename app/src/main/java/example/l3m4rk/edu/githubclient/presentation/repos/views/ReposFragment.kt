@@ -14,6 +14,7 @@ import example.l3m4rk.edu.githubclient.R
 import example.l3m4rk.edu.githubclient.presentation.repos.models.RepoItem
 import example.l3m4rk.edu.githubclient.presentation.repos.presenter.IReposPresenter
 import kotlinx.android.synthetic.main.empty.*
+import kotlinx.android.synthetic.main.error.*
 import kotlinx.android.synthetic.main.progress.*
 import javax.inject.Inject
 
@@ -23,6 +24,7 @@ class ReposFragment : Fragment(), ReposView {
     @Inject lateinit var reposPresenter: IReposPresenter
 
     private lateinit var reposAdapter: ReposAdapter
+    private lateinit var repoList: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,14 +34,19 @@ class ReposFragment : Fragment(), ReposView {
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_repos, container, false)
 
+        activity.title = getString(R.string.title_repos)
+
         reposAdapter = ReposAdapter(mListener)
         setupRepoList(view)
+
+        val retryButton = view.findViewById(R.id.retryButton)
+        retryButton.setOnClickListener { reposPresenter.loadRepos() }
         return view
     }
 
     private fun setupRepoList(view: View) {
         val context = view.context
-        val repoList = view.findViewById(R.id.reposList) as RecyclerView
+        repoList = view.findViewById(R.id.reposList) as RecyclerView
         repoList.layoutManager = LinearLayoutManager(context)
         repoList.itemAnimator = DefaultItemAnimator()
         repoList.adapter = reposAdapter
@@ -63,6 +70,7 @@ class ReposFragment : Fragment(), ReposView {
 
     override fun showProgress() {
         emptyView.visibility = View.GONE
+        errorView.visibility = View.GONE
         progressView.visibility = View.VISIBLE
     }
 
@@ -71,7 +79,7 @@ class ReposFragment : Fragment(), ReposView {
     }
 
     override fun showError() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        errorView.visibility = View.VISIBLE
     }
 
     override fun showEmptyState() {
