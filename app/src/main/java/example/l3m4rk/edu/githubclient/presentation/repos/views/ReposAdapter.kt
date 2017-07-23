@@ -10,7 +10,6 @@ import com.squareup.picasso.Picasso
 import example.l3m4rk.edu.githubclient.R
 import example.l3m4rk.edu.githubclient.presentation.repos.models.RepoItem
 import example.l3m4rk.edu.githubclient.presentation.repos.views.ReposFragment.OnReposInteractionListener
-import example.l3m4rk.edu.githubclient.presentation.repos.views.dummy.DummyContent.DummyItem
 
 class ReposAdapter(private val mListener: OnReposInteractionListener?) : RecyclerView.Adapter<ReposAdapter.RepoViewHolder>() {
 
@@ -33,6 +32,8 @@ class ReposAdapter(private val mListener: OnReposInteractionListener?) : Recycle
 
         repoHolder.mNameView.text = repoItem.name
         repoHolder.mDescriptionView.text = repoItem.description
+        repoHolder.mForksView.text = repoItem.forksCount
+        repoHolder.mWatchesView.text = repoItem.watchCount
 
         repoHolder.mView.setOnClickListener {
             mListener?.onRepoClicked(repoItem)
@@ -44,7 +45,9 @@ class ReposAdapter(private val mListener: OnReposInteractionListener?) : Recycle
     }
 
     fun update(repos: List<RepoItem>) {
-        mItems
+        mItems.clear()
+        mItems.addAll(repos)
+        notifyDataSetChanged()
     }
 
     inner class RepoViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
