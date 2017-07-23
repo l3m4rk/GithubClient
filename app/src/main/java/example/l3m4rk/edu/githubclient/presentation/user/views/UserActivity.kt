@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -18,6 +19,10 @@ import kotlinx.android.synthetic.main.activity_user.*
 import javax.inject.Inject
 
 class UserActivity : AppCompatActivity(), UserView, ReposFragment.OnReposInteractionListener, HasSupportFragmentInjector {
+
+    companion object {
+        private const val TAG = "UserActivity"
+    }
 
     @Inject lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
 
@@ -47,7 +52,7 @@ class UserActivity : AppCompatActivity(), UserView, ReposFragment.OnReposInterac
     }
 
     override fun onRepoClicked(item: RepoItem) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.i(TAG, item.toString())
     }
 
     override fun showLoginScreen() {
