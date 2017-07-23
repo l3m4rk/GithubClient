@@ -17,7 +17,7 @@ class UserPresenter(private val userInteractor: IUserInteractor) : IUserPresente
         userInteractor.checkUserLoggedIn().subscribe({
             when (it) {
                 is Result.Fail -> userView?.showLoginScreen()
-                is Result.Success -> userView?.showUser(User("","","",""))
+                is Result.Success -> userView?.showRepos(User("","","",""))
             }
         }, {
             //error
