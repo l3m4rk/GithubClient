@@ -7,4 +7,5 @@
     <string name="repos_empty">У вас нет репозиториев</string>
     <string name="title_repos">Репозитории</string>
     <string name="retry">Ещё раз</string>
+    <string name="title_commits">Коммиты</string>
 </resources>

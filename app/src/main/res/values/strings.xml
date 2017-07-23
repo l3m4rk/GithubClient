@@ -7,4 +7,5 @@
     <string name="repos_empty">You have no repos</string>
     <string name="title_repos">Repositories</string>
     <string name="retry">Retry</string>
+    <string name="title_commits">Commits</string>
 </resources>
