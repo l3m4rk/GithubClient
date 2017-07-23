@@ -3,19 +3,19 @@ package example.l3m4rk.edu.githubclient.presentation.repos.views
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import example.l3m4rk.edu.githubclient.R
-import example.l3m4rk.edu.githubclient.presentation.repos.views.dummy.DummyContent
-import example.l3m4rk.edu.githubclient.presentation.repos.views.dummy.DummyContent.DummyItem
+import example.l3m4rk.edu.githubclient.presentation.repos.models.RepoItem
 
-class ReposFragment : Fragment() {
-
+class ReposFragment : Fragment(), ReposView {
     private var mListener: OnReposInteractionListener? = null
 
+    private lateinit var reposAdapter: ReposAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -24,16 +24,18 @@ class ReposFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_repos, container, false)
 
+        reposAdapter = ReposAdapter(mListener)
+
         // Set the adapter
         if (view is RecyclerView) {
             val context = view.getContext()
             val recyclerView = view
             recyclerView.layoutManager = LinearLayoutManager(context)
-            recyclerView.adapter = ReposAdapter(DummyContent.ITEMS, mListener)
+            recyclerView.itemAnimator = DefaultItemAnimator()
+            recyclerView.adapter = reposAdapter
         }
         return view
     }
-
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -44,13 +46,25 @@ class ReposFragment : Fragment() {
         }
     }
 
+    override fun showProgress() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun hideProgress() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showRepos(repos: List<RepoItem>) {
+        reposAdapter.update(repos)
+    }
+
     override fun onDetach() {
         super.onDetach()
         mListener = null
     }
 
     interface OnReposInteractionListener {
-        fun onRepoClicked(item: DummyItem)
+        fun onRepoClicked(item: RepoItem)
     }
 
     companion object {

@@ -7,6 +7,7 @@ import dagger.android.AndroidInjection
 import example.l3m4rk.edu.githubclient.R
 import example.l3m4rk.edu.githubclient.data.app.user.User
 import example.l3m4rk.edu.githubclient.presentation.login.views.LoginActivity
+import example.l3m4rk.edu.githubclient.presentation.repos.models.RepoItem
 import example.l3m4rk.edu.githubclient.presentation.repos.views.ReposFragment
 import example.l3m4rk.edu.githubclient.presentation.repos.views.dummy.DummyContent
 import example.l3m4rk.edu.githubclient.presentation.user.presenter.IUserPresenter
@@ -35,7 +36,7 @@ class UserActivity : AppCompatActivity(), UserView, ReposFragment.OnReposInterac
                 .commit()
     }
 
-    override fun onRepoClicked(item: DummyContent.DummyItem) {
+    override fun onRepoClicked(item: RepoItem) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
