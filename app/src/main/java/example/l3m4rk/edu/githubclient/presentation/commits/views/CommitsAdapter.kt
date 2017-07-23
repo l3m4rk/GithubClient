@@ -9,9 +9,11 @@ import example.l3m4rk.edu.githubclient.R
 import example.l3m4rk.edu.githubclient.presentation.commits.models.CommitItem
 
 import example.l3m4rk.edu.githubclient.presentation.commits.views.CommitsFragment.OnCommitInteractionListener
-import example.l3m4rk.edu.githubclient.presentation.commits.views.dummy.DummyContent.DummyItem
 
-class CommitsAdapter(private val mValues: List<DummyItem>, private val mListener: OnCommitInteractionListener?) : RecyclerView.Adapter<CommitsAdapter.ViewHolder>() {
+class CommitsAdapter(private val mListener: OnCommitInteractionListener?) : RecyclerView.Adapter<CommitsAdapter.ViewHolder>() {
+
+    private val mItems = ArrayList<CommitItem>()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -20,9 +22,11 @@ class CommitsAdapter(private val mValues: List<DummyItem>, private val mListener
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.mItem = mValues[position]
-        holder.mIdView.text = mValues[position].id
-        holder.mContentView.text = mValues[position].content
+        holder.mItem = mItems[position]
+        holder.mShaView.text = mItems[position].sha
+        holder.mMessageView.text = mItems[position].message
+        holder.mAuthorView.text = mItems[position].author
+        holder.mDateView.text = mItems[position].date
 
         holder.mView.setOnClickListener {
             mListener?.onCommitClicked(holder.mItem!!)
@@ -30,24 +34,31 @@ class CommitsAdapter(private val mValues: List<DummyItem>, private val mListener
     }
 
     override fun getItemCount(): Int {
-        return mValues.size
+        return mItems.size
     }
 
     fun update(commits: List<CommitItem>) {
-
+        mItems.clear()
+        mItems.addAll(commits)
+        notifyDataSetChanged()
     }
-    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mIdView: TextView
-        val mContentView: TextView
 
-        var mItem: DummyItem? = null
+    inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
+        val mShaView: TextView
+        val mMessageView: TextView
+        val mAuthorView: TextView
+        val mDateView: TextView
+
+        var mItem: CommitItem? = null
 
         init {
-            mIdView = mView.findViewById(R.id.id) as TextView
-            mContentView = mView.findViewById(R.id.content) as TextView
+            mShaView = mView.findViewById(R.id.sha) as TextView
+            mMessageView = mView.findViewById(R.id.name) as TextView
+            mAuthorView = mView.findViewById(R.id.author) as TextView
+            mDateView = mView.findViewById(R.id.date) as TextView
         }
         override fun toString(): String {
-            return super.toString() + " '" + mContentView.text + "'"
+            return super.toString() + " '" + mMessageView.text + "'"
         }
 
     }

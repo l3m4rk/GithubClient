@@ -11,8 +11,8 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import example.l3m4rk.edu.githubclient.R
 import example.l3m4rk.edu.githubclient.data.app.user.User
+import example.l3m4rk.edu.githubclient.presentation.commits.models.CommitItem
 import example.l3m4rk.edu.githubclient.presentation.commits.views.CommitsFragment
-import example.l3m4rk.edu.githubclient.presentation.commits.views.dummy.DummyContent
 import example.l3m4rk.edu.githubclient.presentation.login.views.LoginActivity
 import example.l3m4rk.edu.githubclient.presentation.repos.models.RepoItem
 import example.l3m4rk.edu.githubclient.presentation.repos.views.ReposFragment
@@ -25,12 +25,7 @@ class UserActivity : AppCompatActivity(), UserView,
         CommitsFragment.OnCommitInteractionListener,
         HasSupportFragmentInjector {
 
-    companion object {
-
-        private const val TAG = "UserActivity"
-    }
     @Inject lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
-
     @Inject lateinit var userPresenter: IUserPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,13 +51,13 @@ class UserActivity : AppCompatActivity(), UserView,
                 .commit()
     }
 
-    override fun onCommitClicked(item: DummyContent.DummyItem) {
-        Toast.makeText(this, "Commit #${item.id}", Toast.LENGTH_SHORT).show()
+    override fun onCommitClicked(item: CommitItem) {
+        Toast.makeText(this, "Commit #${item.sha}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onRepoClicked(item: RepoItem) {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.container, CommitsFragment.newInstance(1))
+                .replace(R.id.container, CommitsFragment.newInstance(item.author, item.name))
                 .addToBackStack(null)
                 .commit()
     }

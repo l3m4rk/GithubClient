@@ -8,4 +8,5 @@
     <string name="title_repos">Repositories</string>
     <string name="retry">Retry</string>
     <string name="title_commits">Commits</string>
+    <string name="commits_empty">You have no commits</string>
 </resources>

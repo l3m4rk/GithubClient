@@ -11,15 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import example.l3m4rk.edu.githubclient.R
 import example.l3m4rk.edu.githubclient.presentation.commits.models.CommitItem
-import example.l3m4rk.edu.githubclient.presentation.commits.views.dummy.DummyContent
-import example.l3m4rk.edu.githubclient.presentation.commits.views.dummy.DummyContent.DummyItem
-import kotlinx.android.synthetic.main.empty.*
+import kotlinx.android.synthetic.main.empty_repos.*
 import kotlinx.android.synthetic.main.error.*
 import kotlinx.android.synthetic.main.progress.*
 
 class CommitsFragment : Fragment(), CommitsView {
-    // TODO: Customize parameters
-    private var mColumnCount = 1
+
+    private var mOwner: String? = null
+    private var mRepo: String? = null
 
     private var mListener: OnCommitInteractionListener? = null
     private lateinit var commitsAdapter: CommitsAdapter
@@ -29,7 +28,8 @@ class CommitsFragment : Fragment(), CommitsView {
         super.onCreate(savedInstanceState)
 
         if (arguments != null) {
-            mColumnCount = arguments.getInt(ARG_COLUMN_COUNT)
+            mOwner = arguments.getString(ARG_OWNER)
+            mRepo = arguments.getString(ARG_REPO)
         }
     }
 
@@ -39,7 +39,7 @@ class CommitsFragment : Fragment(), CommitsView {
 
         activity.title = getString(R.string.title_commits)
 
-        commitsAdapter = CommitsAdapter(DummyContent.ITEMS, mListener)
+        commitsAdapter = CommitsAdapter(mListener)
         setupCommitsList(view)
 
         return view
@@ -90,20 +90,19 @@ class CommitsFragment : Fragment(), CommitsView {
     }
 
     interface OnCommitInteractionListener {
-        // TODO: Update argument type and name
-        fun onCommitClicked(item: DummyItem)
+        fun onCommitClicked(item: CommitItem)
     }
 
     companion object {
 
-        // TODO: Customize parameter argument names
-        private val ARG_COLUMN_COUNT = "column-count"
+        private const val ARG_OWNER = "owner"
+        private const val ARG_REPO = "repo"
 
-        // TODO: Customize parameter initialization
-        fun newInstance(columnCount: Int): CommitsFragment {
+        fun newInstance(owner: String, repo: String): CommitsFragment {
             val fragment = CommitsFragment()
             val args = Bundle()
-            args.putInt(ARG_COLUMN_COUNT, columnCount)
+            args.putString(ARG_OWNER, owner)
+            args.putString(ARG_REPO, repo)
             fragment.arguments = args
             return fragment
         }
