@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dagger.android.support.AndroidSupportInjection
 import example.l3m4rk.edu.githubclient.R
 import example.l3m4rk.edu.githubclient.presentation.commits.models.CommitItem
 import kotlinx.android.synthetic.main.empty_repos.*
@@ -54,6 +55,7 @@ class CommitsFragment : Fragment(), CommitsView {
     }
 
     override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
         super.onAttach(context)
         if (context is OnCommitInteractionListener) {
             mListener = context

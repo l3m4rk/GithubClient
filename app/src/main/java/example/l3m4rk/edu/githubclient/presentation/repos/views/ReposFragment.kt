@@ -13,7 +13,7 @@ import dagger.android.support.AndroidSupportInjection
 import example.l3m4rk.edu.githubclient.R
 import example.l3m4rk.edu.githubclient.presentation.repos.models.RepoItem
 import example.l3m4rk.edu.githubclient.presentation.repos.presenter.IReposPresenter
-import kotlinx.android.synthetic.main.empty.*
+import kotlinx.android.synthetic.main.empty_repos.*
 import kotlinx.android.synthetic.main.error.*
 import kotlinx.android.synthetic.main.progress.*
 import javax.inject.Inject
