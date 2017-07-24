@@ -12,8 +12,6 @@
         android:id="@+id/commitsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
         tools:context="example.l3m4rk.edu.githubclient.presentation.commits.views.CommitsFragment"
         tools:listitem="@layout/item_commit"
@@ -21,7 +19,7 @@
 
     <include layout="@layout/progress"/>
 
-    <include layout="@layout/empty_commmits"/>
+    <include layout="@layout/empty_commits"/>
 
     <include layout="@layout/error"/>
 
