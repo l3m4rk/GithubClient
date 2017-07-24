@@ -1,5 +1,6 @@
 package example.l3m4rk.edu.githubclient.presentation.repos.presenter
 
+import example.l3m4rk.edu.githubclient.business.commits.validation.ErrorParser
 import example.l3m4rk.edu.githubclient.data.network.repos.RepoDTO
 import example.l3m4rk.edu.githubclient.presentation.repos.models.RepoItem
 import example.l3m4rk.edu.githubclient.presentation.repos.views.ReposView
@@ -8,7 +9,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class ReposPresenter(private val githubService: GithubService) : IReposPresenter {
+class ReposPresenter(private val githubService: GithubService,
+                     private val errorParser: ErrorParser) : IReposPresenter {
 
     private var reposView: ReposView? = null
     private val disposables = CompositeDisposable()
@@ -23,19 +25,22 @@ class ReposPresenter(private val githubService: GithubService) : IReposPresenter
                 .map { repoDtoList: List<RepoDTO> -> map(repoDtoList) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    repos: List<RepoItem> ->
-                    reposView?.hideProgress()
-                    if (repos.isEmpty()) {
-                        reposView?.showEmptyState()
-                    } else {
-                        reposView?.showRepos(repos)
-                    }
-                }, {
-                    reposView?.hideProgress()
-                    reposView?.showError()
-                })
+                .subscribe(this::handleSuccess, this::handleError)
         disposables.add(d)
+    }
+
+    private fun handleSuccess(repos: List<RepoItem>) {
+        reposView?.hideProgress()
+        if (repos.isEmpty()) {
+            reposView?.showEmptyState()
+        } else {
+            reposView?.showRepos(repos)
+        }
+    }
+
+    private fun handleError(it: Throwable) {
+        reposView?.hideProgress()
+        reposView?.showError(errorParser.parseError(it))
     }
 
     fun map(repoDtoList: List<RepoDTO>): List<RepoItem> {
