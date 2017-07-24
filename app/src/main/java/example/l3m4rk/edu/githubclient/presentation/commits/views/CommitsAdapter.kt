@@ -53,7 +53,7 @@ class CommitsAdapter(private val mListener: OnCommitInteractionListener?) : Recy
 
         init {
             mShaView = mView.findViewById(R.id.sha) as TextView
-            mMessageView = mView.findViewById(R.id.name) as TextView
+            mMessageView = mView.findViewById(R.id.message) as TextView
             mAuthorView = mView.findViewById(R.id.author) as TextView
             mDateView = mView.findViewById(R.id.date) as TextView
         }

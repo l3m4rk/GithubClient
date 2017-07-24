@@ -9,17 +9,22 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import dagger.android.support.AndroidSupportInjection
 import example.l3m4rk.edu.githubclient.R
 import example.l3m4rk.edu.githubclient.presentation.commits.models.CommitItem
+import example.l3m4rk.edu.githubclient.presentation.commits.presenter.ICommitsPresenter
 import kotlinx.android.synthetic.main.empty_repos.*
 import kotlinx.android.synthetic.main.error.*
 import kotlinx.android.synthetic.main.progress.*
+import javax.inject.Inject
 
 class CommitsFragment : Fragment(), CommitsView {
 
     private var mOwner: String? = null
     private var mRepo: String? = null
+
+    @Inject lateinit var commitsPresenter: ICommitsPresenter
 
     private var mListener: OnCommitInteractionListener? = null
     private lateinit var commitsAdapter: CommitsAdapter
@@ -43,6 +48,9 @@ class CommitsFragment : Fragment(), CommitsView {
         commitsAdapter = CommitsAdapter(mListener)
         setupCommitsList(view)
 
+        val retryButton = view.findViewById(R.id.retryButton)
+        retryButton.setOnClickListener { commitsPresenter.loadCommits(mOwner!!, mRepo!!) }
+
         return view
     }
 
@@ -62,6 +70,12 @@ class CommitsFragment : Fragment(), CommitsView {
         } else {
             throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
         }
+        commitsPresenter.bindView(this)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        commitsPresenter.loadCommits(mOwner!!, mRepo!!)
     }
 
     override fun showProgress() {
@@ -78,13 +92,16 @@ class CommitsFragment : Fragment(), CommitsView {
         emptyView.visibility = View.VISIBLE
     }
 
-    override fun showError() {
+    override fun showError(errorMessage: String) {
         errorView.visibility = View.VISIBLE
+        val messageView = errorView.findViewById(R.id.errorMessage) as TextView
+        messageView.text = errorMessage
     }
 
     override fun onDetach() {
         super.onDetach()
         mListener = null
+        commitsPresenter.unbindView()
     }
 
     override fun showCommits(commits: List<CommitItem>) {

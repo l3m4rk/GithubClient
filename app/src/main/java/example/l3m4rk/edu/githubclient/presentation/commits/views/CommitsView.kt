@@ -8,6 +8,6 @@ interface CommitsView {
     fun hideProgress()
     fun showCommits(commits: List<CommitItem>)
     fun showEmptyState()
-    fun showError()
+    fun showError(errorMessage: String)
 
 }

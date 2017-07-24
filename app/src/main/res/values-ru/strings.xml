@@ -9,4 +9,6 @@
     <string name="retry">Ещё раз</string>
     <string name="title_commits">Коммиты</string>
     <string name="commits_empty">У вас нет коммитов</string>
+    <string name="error_no_connection">Нет соединения</string>
+    <string name="error_common">Что-то пошло не так</string>
 </resources>
