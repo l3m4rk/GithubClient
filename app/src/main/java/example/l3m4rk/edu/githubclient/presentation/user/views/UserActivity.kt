@@ -33,6 +33,10 @@ class UserActivity : AppCompatActivity(), UserView,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
         setSupportActionBar(toolbar)
+        supportFragmentManager.addOnBackStackChangedListener {
+            val displayUp = supportFragmentManager.backStackEntryCount > 0
+            supportActionBar?.setDisplayHomeAsUpEnabled(displayUp)
+        }
     }
 
     override fun supportFragmentInjector(): AndroidInjector<Fragment> {

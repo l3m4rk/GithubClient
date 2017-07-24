@@ -7,6 +7,7 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -32,7 +33,7 @@ class CommitsFragment : Fragment(), CommitsView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setHasOptionsMenu(true)
         if (arguments != null) {
             mOwner = arguments.getString(ARG_OWNER)
             mRepo = arguments.getString(ARG_REPO)
@@ -60,6 +61,13 @@ class CommitsFragment : Fragment(), CommitsView {
         commitsList.layoutManager = LinearLayoutManager(context)
         commitsList.itemAnimator = DefaultItemAnimator()
         commitsList.adapter = commitsAdapter
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == android.R.id.home) {
+            mListener?.onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onAttach(context: Context?) {
@@ -110,6 +118,7 @@ class CommitsFragment : Fragment(), CommitsView {
 
     interface OnCommitInteractionListener {
         fun onCommitClicked(item: CommitItem)
+        fun onBackPressed()
     }
 
     companion object {
