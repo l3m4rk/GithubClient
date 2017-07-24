@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import dagger.Module
 import dagger.Provides
+import example.l3m4rk.edu.githubclient.business.commits.validation.ErrorParser
 import example.l3m4rk.edu.githubclient.di.login.LoginComponent
 import example.l3m4rk.edu.githubclient.di.user.UserComponent
 import example.l3m4rk.edu.githubclient.repositories.user.IUserRepository
@@ -26,6 +27,9 @@ class AppModule {
         return application.applicationContext
     }
 
+    @Provides fun provideErrorParser(context: Context): ErrorParser {
+        return ErrorParser(context)
+    }
 
 
 }

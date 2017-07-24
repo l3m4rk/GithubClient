@@ -8,6 +8,6 @@ interface ReposView {
     fun hideProgress()
     fun showRepos(repos: List<RepoItem>)
     fun showEmptyState()
-    fun showError()
+    fun showError(errorMessage: String)
 
 }

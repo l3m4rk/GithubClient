@@ -7,4 +7,8 @@
     <string name="repos_empty">You have no repos</string>
     <string name="title_repos">Repositories</string>
     <string name="retry">Retry</string>
+    <string name="title_commits">Commits</string>
+    <string name="commits_empty">You have no commits</string>
+    <string name="error_no_connection">No connection</string>
+    <string name="error_common">Something went wrong</string>
 </resources>

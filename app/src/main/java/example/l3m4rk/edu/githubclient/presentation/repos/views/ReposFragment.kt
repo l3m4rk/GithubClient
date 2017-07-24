@@ -9,11 +9,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import dagger.android.support.AndroidSupportInjection
 import example.l3m4rk.edu.githubclient.R
 import example.l3m4rk.edu.githubclient.presentation.repos.models.RepoItem
 import example.l3m4rk.edu.githubclient.presentation.repos.presenter.IReposPresenter
-import kotlinx.android.synthetic.main.empty.*
+import kotlinx.android.synthetic.main.empty_repos.*
 import kotlinx.android.synthetic.main.error.*
 import kotlinx.android.synthetic.main.progress.*
 import javax.inject.Inject
@@ -78,8 +79,10 @@ class ReposFragment : Fragment(), ReposView {
         progressView.visibility = View.GONE
     }
 
-    override fun showError() {
+    override fun showError(errorMessage: String) {
         errorView.visibility = View.VISIBLE
+        val messageView = errorView.findViewById(R.id.errorMessage) as TextView
+        messageView.text = errorMessage
     }
 
     override fun showEmptyState() {
